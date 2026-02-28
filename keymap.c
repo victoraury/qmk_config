@@ -170,13 +170,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,------------------------------------------------.                    ,---------------------------------------------------.
   KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,             LT(_SWITCH,KC_6), KC_7,   KC_8,    KC_9,    KC_0,    KC_GRV,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_TAB,KC_Q,KC_W,KC_E,  KC_R,    KC_T,                      KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_BSPC,
+  KC_TAB,KC_Q,KC_W,KC_E,  KC_R,    KC_T,                                  KC_Y,    KC_U,   KC_I,    KC_O,    KC_P,    KC_QUOT,
   //|------+-------+--------+--------+--------+------|                   |--------+-------+--------+--------+--------+---------|
-  KC_LSFT,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_ENT,
+  KC_LSFT,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,   KC_K,    KC_L,    KC_SCLN, KC_SLSH,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-  KC_LCTL,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
+  KC_LCTL,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,  KC_MUTE,  KC_D_MUTE,KC_N,    KC_M,   KC_COMM, KC_DOT,  KC_NO, KC_LSFT,
   //|------+-------+--------+--------+--------+------|  ===  |   |  ===  |--------+-------+--------+--------+--------+---------|
-    KC_BSPC, KC_LGUI, KC_LALT, KC_LOWER,  KC_SPC   ,                      KC_SPC,  KC_RAISE, KC_ENT, KC_RCTL, KC_RALT
+  KC_BSLS, KC_LGUI, KC_LALT, KC_LOWER, KC_BSPC,                      KC_ENT, KC_SPC , KC_RAISE, KC_LBRC, KC_RBRC
   //            \--------+--------+--------+---------+-------|   |--------+---------+--------+---------+-------/
 ),
 
@@ -256,32 +256,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef RGBLIGHT_ENABLE
 char layer_state_str[70];
 // Now define the array of layers. Later layers take precedence
-
 // QWERTY,
-// Light on inner column and underglow
 const rgblight_segment_t PROGMEM layer_qwerty_lights[] = RGBLIGHT_LAYER_SEGMENTS(
   SET_LAYER_ID(HSV_RED)
-
 );
-
-// _NUM,
-// Light on outer column and underglow
+// LOWER,
 const rgblight_segment_t PROGMEM layer_num_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-	SET_LAYER_ID(HSV_TEAL)
-
+	SET_LAYER_ID(HSV_GREEN)
 );
-// _SYMBOL,
-// Light on inner column and underglow
+// RAISE
 const rgblight_segment_t PROGMEM layer_symbol_lights[] = RGBLIGHT_LAYER_SEGMENTS(
 	SET_LAYER_ID(HSV_BLUE)
-
-    );
-// _COMMAND,
-// Light on inner column and underglow
-const rgblight_segment_t PROGMEM layer_command_lights[] = RGBLIGHT_LAYER_SEGMENTS(
-  SET_LAYER_ID(HSV_PURPLE)
 );
-
+// ADJUST
+const rgblight_segment_t PROGMEM layer_command_lights[] = RGBLIGHT_LAYER_SEGMENTS(
+  SET_LAYER_ID(HSV_YELLOW)
+);
 //_NUMPAD
 const rgblight_segment_t PROGMEM layer_numpad_lights[] = RGBLIGHT_LAYER_SEGMENTS(
 	SET_INDICATORS(HSV_ORANGE),
@@ -299,7 +289,6 @@ const rgblight_segment_t PROGMEM layer_switcher_lights[] = RGBLIGHT_LAYER_SEGMEN
 );
 
 const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
-
     layer_qwerty_lights,
 	layer_num_lights,// overrides layer 1
 	layer_symbol_lights,
@@ -310,7 +299,6 @@ const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 
 layer_state_t layer_state_set_user(layer_state_t state) {
 	rgblight_set_layer_state(0, layer_state_cmp(state, _DEFAULTS) && layer_state_cmp(default_layer_state,_QWERTY));
-
 
 	rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
 	rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
@@ -324,7 +312,6 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 
 	rgblight_mode(10);// haven't found a way to set this in a more useful way
-
 }
 #endif
 
